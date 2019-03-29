@@ -2,37 +2,35 @@
 #include <string>
 #include <map>
 #include <algorithm>
-#include <sstream>
 #include <vector>
 
 
 // only problem with a whitespace
 
 std::string get_number_representation(const std::string &input, std::map<char, std::string> &cell_phone_map) {
-    std::stringstream ss;
+    std::string result;
     char previous = '+';
     std::string temp_value;
     for(const char &symbol: input) {
         temp_value = cell_phone_map[symbol];
         if (previous == temp_value[0]) {
-            ss << " ";
+            result += " ";
         }
-        ss << std::move(temp_value);
+        result += temp_value;
         previous = temp_value[0];
     }
 
-    return ss.str();
+    return result;
 }
 
 std::map<char, std::string> invert_map(const std::map<char, std::string> input_map) {
     std::map<char, std::string> inv_map;
     for(const auto &[key, value]: input_map) {
         int index = 1;
-        std::stringstream ss;
+        std::string new_value;
         for(const char &letter: value) {
-            for(int j = 0; j < index; ++j) ss << std::move(key);
-            inv_map[letter] = ss.str();
-            ss.clear();
+            for(int j = 0; j < index; ++j) new_value += key;
+            inv_map[letter] = new_value;
         }
     }
     return inv_map;
